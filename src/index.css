@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.padding {
+  @apply px-[16px] md:px-[24px] lg:px-[32px] xl:px-[40px];
+}
+
+.container-custom {
+  max-width: 1200px;
+  margin: 0 auto;
+
+}
+
+.bg-custom {
+  background-image: url('../src/assets/img/image1\ .png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
