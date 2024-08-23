@@ -1,6 +1,6 @@
-import instance from "@/configs/axios"
-import { IPost, PostsResponse } from "@/interface"
-import { AxiosResponse } from "axios";
+
+import instance from "@/configs/axios";
+import { IPost } from "@/interface";
 
 
 export const getAllTag = () => {

@@ -11,11 +11,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 
-type ILoginResponse = {
-  accessToken: string;
-  refreshToken: string;
-  // message: string;
-}
+
 type IUser = {
   username: string;
 }
