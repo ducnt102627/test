@@ -1,6 +1,7 @@
 import Logo from '@/assets/img/logo.svg'
 import instance from '@/configs/axios'
 import { AuthContext, AuthProvider } from '@/contexts/AuthContext'
+import ButtonComponent from '@/pages/(admin)/_components/ButtonComponent'
 import { joiResolver } from '@hookform/resolvers/joi'
 import Joi from 'joi'
 import { useContext, useState } from 'react'
@@ -62,11 +63,15 @@ const Signin = () => {
           <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
             <div className="w-full flex flex-col  ">
               <div className="mb-9">
-                <label htmlFor="" className='text-base text-[#00000] leading-[160%] tracking-[0.08px] pb-3 '>Username</label>
+                <label htmlFor="" className='text-lg text-[#00000] leading-[160%] tracking-[0.08px]  '>Username</label>
                 <input type="text" className='w-full h-[50px] px-3 border border-[#000000] rounded-md ' {...register("username")} />
                 {errors.username && <div className="text-red-500 pt-2">{errors.username.message}</div>}
               </div>
-              <button type='submit' className='bg-[#9C69E2] px-[80px] py-[15px] border-[#9C69E2] rounded-[50px] text-white text-base font-semibold'>Sign In</button>
+              <ButtonComponent
+                title='Sign In'
+                type='submit'
+                className='px-[80px] py-[15px] font-bold'
+              />
             </div>
           </form>
         </div>

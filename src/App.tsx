@@ -5,7 +5,7 @@ import Admin from "./pages/(admin)/Layout"
 import Form from "./pages/(admin)/_components/Form"
 import Table from "./pages/(admin)/_components/Table"
 import ProtectedRouter from "./routes/ProtectedRotuer"
-import Layout from "./routes/Layout"
+import Layout from "./pages/(client)/Layout"
 
 function App() {
 

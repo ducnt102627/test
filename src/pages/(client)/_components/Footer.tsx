@@ -1,11 +1,20 @@
 import React from 'react'
 import Logo from "@/assets/img/logo.svg"
+import { motion } from "framer-motion"
+
 const Footer = () => {
   return (
     <>
       <div className="my-20 pt-24   border-t-2 border-[#9C69E2]/20 ">
         <div className="pb-20">
-          <div className="flex flex-col xl:flex-row gap-y-8 justify-center items-center">
+          <motion.div
+            initial={{ y: 50, opacity: 0. }}
+            whileInView={{ y: 0, opacity: 1. }}
+            transition={{
+              duration: 1.5,
+              delay: 0.5,
+              // ease: [0, 0.71, 0.2, 1.01],
+            }} className="flex flex-col xl:flex-row gap-y-8 justify-center items-center">
             <div className="w-[45%] flex text-center xl:text-left flex-col">
               <div className="flex justify-center xl:justify-start items-center gap-x-5 pb-16">
                 <img src={Logo} alt="" />
@@ -65,11 +74,18 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
           {/*  */}
         </div>
         {/*  */}
-        <div className="flex flex-col md:flex-row justify-between">
+        <motion.div
+          initial={{ y: 50, opacity: 0. }}
+          whileInView={{ y: 0, opacity: 1. }}
+          transition={{
+            duration: 1.5,
+            delay: 0.5,
+            // ease: [0, 0.71, 0.2, 1.01],
+          }} className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="">
             <p className="">© Datawarehouse™, 2020. All rights reserved.</p>
             <p className="">Company Registration Number: 21479524.</p>
@@ -86,7 +102,7 @@ const Footer = () => {
               </svg>
             </span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </>
   )

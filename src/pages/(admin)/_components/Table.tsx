@@ -1,62 +1,102 @@
 import instance from '@/configs/axios';
 import { IPost, ITags } from '@/interface';
-import { fetchPosts } from '@/services/PostService';
+import { deletePostById, getAllPosts, getAllTag } from '@/services/PostService';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner';
+import Paginate from './Paginate';
 
 const Table = () => {
-  const queryClient = useQueryClient();
+  const [posts, setPosts] = useState<IPost[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [title, setTitle] = useState([]);
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useQuery({
-    queryKey: ['POST', title, page],
-    queryFn: async () => {
-      const { data } = await instance.get('/posts');
-      return data.posts
-      // const response = await fetchPosts(title, page);
-      // console.log("data", response.posts)
-      // return data.posts;
-    },
-    staleTime: 1000 * 60 * 5, // 5 phút
-    // cacheTime: Infinity,
-    // placeholderData: keepPreviousData,
-    // staleTime: 5 * 60 * 1000
-  });
-  const { mutate } = useMutation({
-    mutationFn: async (id: string) => {
-      await instance.delete(`/posts/${id}`);
-    },
-    onSuccess: () => {
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [SearchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const titleFilter = SearchParams.get('title') || '';
+  const tagsFilter = SearchParams.get('tags') ? SearchParams.get('tags')!.split(',') : [];
+
+  useEffect(() => {
+    const handleFetch = async () => {
+      try {
+        const [resTag, resPosts] = await Promise.all([
+          getAllTag(),
+          getAllPosts(location.search),
+        ]);
+        setCurrentPage(resPosts.data.current_page);
+        setTotalPages(resPosts.data.total_page);
+        setTags(resTag?.data || []);
+        setPosts(resPosts?.data?.posts || []);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    handleFetch();
+  }, [SearchParams])
+  // console.log("-0--0", posts)
+  const handleDelete = async (id: string) => {
+    try {
+      const { data } = await deletePostById(id);
+      setPosts(posts.filter((post: IPost) => post.id !== id));
       toast.success("Delete post successfully!");
-      queryClient.invalidateQueries({
-        queryKey: ['POST']
-      });
-    },
-    onError: () => {
+    } catch (error) {
+      console.log(error);
       toast.error("Delete post failed!");
     }
-  })
-  // console.log("list", data)
-  if (isLoading) return <div>Loading...</div>;
+  }
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    setSearchParams({ page: page.toString() });
+  };
+
+  const handleSearch = async (colum: string, keyword: string) => {
+    const filter: Record<string, string> = {};
+    for (const [key, value] of SearchParams.entries()) {
+      filter[key] = value;
+    }
+    if (keyword) {
+      filter[colum] = keyword;
+    } else {
+      delete filter[colum];
+    }
+    setSearchParams(filter);
+    const { data } = await getAllPosts(location.search);
+    setPosts(data.posts);
+    setCurrentPage(data.current_page);
+    setTotalPages(data.total_page);
+  }
   return (
     <>
       <div className="max-w-full w-full">
-        <div className="flex">
+        <div className="flex justify-between items-center">
           <Link to="/admin/add">
-            <button className='bg-[#9C69E2] px-[80px] py-[15px] border-[#9C69E2] rounded-[50px] text-white text-base font-semibold'>Add new</button>
+            <button className='bg-[#9C69E2] px-[80px] py-[13px] border-[#9C69E2] rounded-[50px] text-white text-base font-semibold'>Add new</button>
           </Link>
-          {/* <input
-            type="text"
-            placeholder="Search by title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          /> */}
+          <div className="flex gap-8">
+            <input
+              type="text"
+              placeholder="Title"
+              onChange={(e) => handleSearch("title", e.target.value)}
+
+              className="py-[8px] pl-2 border text-[#000000] border-gray-400 focus:outline-none rounded-md"
+            />
+            <select
+              className='border border-gray-400 focus:outline-none w-[180px] px-2 rounded-md'
+              value={tagsFilter}
+              onChange={(e) => handleSearch("tags", e.target.value)}
+            >
+              <option value=""> Tags</option>
+              {tags?.map((tag, index) => (
+                <option key={index}>{tag}</option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="mt-10">
-          <div className="font-sans overflow-x-auto">
-            <table className="w-full gap-5">
+          <div className="font-sans overflow-x-auto shadow-md shadow-[#D9D9D9]  rounded-xl  ">
+            <table className="w-full gap-5 border">
               <thead className="bg-[#D9D9D9] whitespace-nowrap">
                 <tr>
                   <th className="p-4 text-left text-xs font-semibold text-gray-800">
@@ -76,13 +116,13 @@ const Table = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className=" pt-12  ">
-                {Array.isArray(data) && data?.map((item: IPost, index: number) => {
+              <tbody className=" pt-12 divide-y divide-[#D9D9D9] ">
+                {Array.isArray(posts) && posts?.map((item: IPost, index: number) => {
                   console.log("---------", item.tags)
                   return (
                     <tr className="hover:bg-gray-50" key={index}>
-                      <td className="p-4 text-[15px] text-gray-800">
-                        {index + 1}
+                      <td className="pl-2 text-[15px] text-gray-800">
+                        {item?.id}
                       </td>
                       <td className="p-4 text-[15px] text-gray-800">
                         {item?.title}
@@ -93,7 +133,7 @@ const Table = () => {
                       <td className="p-4 text-[15px] text-gray-800">
                         {item?.tags?.map((item: any, index: number) => {
                           console.log("tag-item", item)
-                          return (item.tag as string)
+                          return (item as string)
                         }).join(" ,")}
                       </td>
                       <td className="p-4 flex items-center justify-center">
@@ -105,7 +145,7 @@ const Table = () => {
                             </svg>
                           </button>
                         </Link>
-                        <button onClick={() => { if (window.confirm("Are you sure you want to delete this post!")) { mutate(item.id) } }} className="mr-4" title="Delete">
+                        <button onClick={() => { if (window.confirm("Are you sure you want to delete this post!")) { handleDelete(item.id) } }} className="mr-4" title="Delete">
                           <svg xmlns="http://www.w3.org/2000/svg" className="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
                             <path d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z" data-original="#000000" />
                             <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z" data-original="#000000" />
@@ -117,8 +157,11 @@ const Table = () => {
                 })}
               </tbody>
             </table>
-          </div>
 
+          </div>
+          <div className="flex justify-end mt-2">
+            <Paginate currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+          </div>
         </div>
       </div >
     </>

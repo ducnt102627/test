@@ -7,7 +7,7 @@ export interface IPost {
 export interface IGalleries {
   id: string,
   imageUrl: string,
-  description: string
+  desctiption: string
 }
 export interface ITags {
   tag: string,
