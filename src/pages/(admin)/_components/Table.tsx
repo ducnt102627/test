@@ -8,7 +8,6 @@ import Paginate from './Paginate';
 const Table = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [tags, setTags] = useState<string[]>([]);
-  const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [SearchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -33,7 +32,7 @@ const Table = () => {
   }, [SearchParams])
   const handleDelete = async (id: string) => {
     try {
-      const { data } = await deletePostById(id);
+      await deletePostById(id);
       setPosts(posts.filter((post: IPost) => post.id !== id));
       toast.success("Delete post successfully!");
     } catch (error) {
@@ -42,7 +41,7 @@ const Table = () => {
     }
   }
   const handlePageChange = (page: number) => {
-    setPage(page);
+    setCurrentPage(page);
     setSearchParams({ page: page.toString() });
   };
 
