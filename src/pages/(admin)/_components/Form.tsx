@@ -16,12 +16,11 @@ const postSchema = Joi.object({
   tags: Joi.array().min(1).messages({
     "array.min": "Array can't be empty!"
   })
-
 })
 const Form = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { handleSubmit, register, reset, formState: { errors }, clearErrors } = useForm<IPost>({
+  const { handleSubmit, register, reset, formState: { errors }, setValue, getValues, clearErrors } = useForm<IPost>({
     defaultValues: {
       title: "",
       description: "",
@@ -57,14 +56,14 @@ const Form = () => {
       }
     })()
   }, [])
-  // console.log("------tag", tagsList)
+  console.log("------tag", selectedTags)
   const handleTagClick = (tag: string) => {
     if (selectedTags.length > 0) {
       console.log(">>Running ee");
       clearErrors('tags');
       console.log(">>>>", errors);
-
     }
+    setValue('tags', [...selectedTags, tag]);
     setSelectedTags((prevTags) =>
       prevTags.includes(tag) ? prevTags.filter((t) => t !== tag) : [...prevTags, tag]
     );
@@ -76,6 +75,7 @@ const Form = () => {
         ...post,
         tags: selectedTags
       };
+      console.log("type tag", formattedPost.tags)
       if (id) {
         await updatePosts(id as string, formattedPost);
         toast.success("Update post successfully!");

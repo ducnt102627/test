@@ -48,7 +48,7 @@ const Header = () => {
           </div>
         </motion.div>
 
-        <div className="pt-28 xl:pb-36 h-full overflow-hidden">
+        <div className="pt-28 xl:pb-40 h-full overflow-hidden">
           <div className="flex w-full h-full flex-col xl:flex-row relative">
             <motion.div
               initial={{ y: -100, opacity: 0 }}
@@ -58,7 +58,7 @@ const Header = () => {
                 delay: 0.5,
                 // ease: [0, 0.71, 0.2, 1.01],
               }}>
-              <div className="text-center xl:w-[700px] xl:text-left xl:absolute xl:bottom-10">
+              <div className="text-center xl:w-[700px] xl:text-left xl:absolute xl:top-5">
                 <h1 className="text-[#212353] xl:max-w-[700px] text-[40px] xl:text-[80px] font-bold leading-[110%] pb-5 xl:pb-12">Save your data storage here.</h1>
                 <p className="text-[#4B5D68] xl:max-w-[380px] text-[18px] font-medium leading-[160%] pb-6 xl:pb-12">Data Warehouse is a data storage area that has been
                   tested for security, so you can store your data here
@@ -72,7 +72,7 @@ const Header = () => {
               </div>
             </motion.div>
 
-            <div className="xl:absolute xl:right-0 xl:bottom-0 max-w-[760px] max-h-[402px] mx-auto">
+            <div className="xl:absolute xl:right-0 xl:bottom-5 max-w-[760px] max-h-[402px] mx-auto">
               <motion.div
                 initial={{ y: 100, opacity: 0. }}
                 whileInView={{ y: 0, opacity: 1. }}
