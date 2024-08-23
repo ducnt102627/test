@@ -125,7 +125,7 @@ const Table = () => {
                         {item?.description}
                       </td>
                       <td className="p-4 text-[15px] text-gray-800">
-                        {item?.tags?.map((item: any) => {
+                        {Array.isArray(item.tags) && item?.tags?.map((item: any) => {
                           console.log("tag-item", item)
                           return (item as string)
                         }).join(" ,")}
