@@ -4,7 +4,6 @@ import { AuthContext } from '@/contexts/AuthContext'
 import ButtonComponent from '@/pages/(admin)/_components/ButtonComponent'
 import { motion } from "framer-motion"
 import { useContext } from 'react'
-import { IoMdMenu } from 'react-icons/io'
 import { Link } from 'react-router-dom'
 import useLogout from '../auth/Logout'
 const Header = () => {
@@ -27,24 +26,24 @@ const Header = () => {
           <div className="">
             <Link to="/"> <img src={Logo} alt="" /></Link>
           </div>
+
           <div className="flex">
-            <div className="hidden md:block">
+            <div className="">
               {isSignIn === false ? (<Link to="/signin">
                 <ButtonComponent type='button' title='Sing In' className='px-[80px] py-[15px] text-base font-bold' />
               </Link>) : ('')}
               {isSignIn === true ? (
-                <div className=" flex gap-x-8">
+                <div className=" flex flex-col sm:flex-row gap-y-2 sm:gap-x-4 md:gap-x-8">
                   <Link to="/admin">
-                    <ButtonComponent type='button' title='Profile' className='px-[80px] py-[15px] font-bold' />
+                    <ButtonComponent type='button' title='Profile' className='px-6 py-2 md:px-[80px] md:py-[15px] font-bold' />
                   </Link>
-                  <ButtonComponent type='button' onClick={handleLogout} title='Logout' className='px-[80px] py-[15px] font-bold' />
+                  <ButtonComponent type='button' onClick={handleLogout} title='Logout' className='px-6 py-2 md:px-[80px] md:py-[15px] font-bold' />
                   {/* <button onClick={handleLogout} className=" bg-[#9C69E2] px-[80px] py-[15px] border-[#9C69E2] rounded-[50px] text-white text-base ">Logout</button> */}
                 </div>
               ) : ('')}
             </div>
-            <div className="md:hidden">
-              <span className=""><IoMdMenu size={48} /></span>
-            </div>
+
+
           </div>
         </motion.div>
 
