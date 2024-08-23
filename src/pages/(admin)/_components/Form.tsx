@@ -20,7 +20,7 @@ const postSchema = Joi.object({
 const Form = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { handleSubmit, register, reset, formState: { errors }, setValue, getValues, clearErrors } = useForm<IPost>({
+  const { handleSubmit, register, reset, formState: { errors }, setValue } = useForm<IPost>({
     defaultValues: {
       title: "",
       description: "",
