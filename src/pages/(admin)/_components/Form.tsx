@@ -1,6 +1,8 @@
+
 import instance from '@/configs/axios';
 import { IPost } from '@/interface';
 import { addNewPosts, getAllTag, updatePosts } from '@/services/PostService';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,31 +10,28 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const postSchema = Joi.object({
-  // id: Joi.string(),
+  id: Joi.string(),
   title: Joi.string().required(),
   description: Joi.string().required(),
-  tags: Joi.array().items(Joi.object()).required(),
+  tags: Joi.array().min(1).messages({
+    "array.min": "Array can't be empty!"
+  })
+
 })
-interface IPostF {
-  id?: string;
-  title: string;
-  description: string;
-  tags: { value: string; label: string }[]; // Thay đổi tại đây
-}
 const Form = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { handleSubmit, register, reset, control, formState: { errors }, clearErrors } = useForm<IPost>({
+  const { handleSubmit, register, reset, formState: { errors }, clearErrors } = useForm<IPost>({
     defaultValues: {
       title: "",
       description: "",
-      // tags: [{""}],
+      tags: [],
     },
-    // resolver: joiResolver(postSchema)
+    resolver: joiResolver(postSchema)
   });
 
   const [tagsList, setTagsList] = useState([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]); // Manage selected tags
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   useEffect(() => {
     (async () => {
       try {
@@ -41,7 +40,7 @@ const Form = () => {
         console.log("postID", post)
         if (post) {
           reset(post);
-          setSelectedTags(post.tags); // Cập nhật selectedTags với tags từ post
+          setSelectedTags(post.tags);
         }
       } catch (error) {
         console.log(error)
@@ -52,19 +51,25 @@ const Form = () => {
     (async () => {
       try {
         const { data } = await getAllTag();
-        // const formattedTags = data.map((tag: string) => ({ value: tag, label: tag }));
         setTagsList(data);
       } catch (error) {
         console.log(error)
       }
     })()
   }, [])
-  console.log("------tag", tagsList)
+  // console.log("------tag", tagsList)
   const handleTagClick = (tag: string) => {
+    if (selectedTags.length > 0) {
+      console.log(">>Running ee");
+      clearErrors('tags');
+      console.log(">>>>", errors);
+
+    }
     setSelectedTags((prevTags) =>
       prevTags.includes(tag) ? prevTags.filter((t) => t !== tag) : [...prevTags, tag]
     );
   };
+
   const onSubmit = async (post: IPost) => {
     try {
       const formattedPost = {
@@ -72,14 +77,14 @@ const Form = () => {
         tags: selectedTags
       };
       if (id) {
-        const { data } = await updatePosts(id as string, formattedPost);
+        await updatePosts(id as string, formattedPost);
         toast.success("Update post successfully!");
       } else {
-        const { data } = await addNewPosts(formattedPost)
-        // console.log("postadd", formattedPost)
+        await addNewPosts(formattedPost);
+        console.log("000", formattedPost)
         toast.success("Add post successfully!");
       }
-      navigate('/admin/list')
+      navigate('/admin')
     } catch (error) {
       console.log(error)
     }

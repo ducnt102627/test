@@ -8,12 +8,10 @@ import Paginate from './Paginate';
 const Table = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [tags, setTags] = useState<string[]>([]);
-  const [title, setTitle] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [SearchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const titleFilter = SearchParams.get('title') || '';
   const tagsFilter = SearchParams.get('tags') ? SearchParams.get('tags')!.split(',') : [];
 
   useEffect(() => {
@@ -33,7 +31,6 @@ const Table = () => {
     }
     handleFetch();
   }, [SearchParams])
-  // console.log("-0--0", posts)
   const handleDelete = async (id: string) => {
     try {
       const { data } = await deletePostById(id);

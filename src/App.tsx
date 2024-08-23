@@ -17,7 +17,7 @@ function App() {
           <Route index element={<HomePage />} />
         </Route>
         <Route path="admin" element={<ProtectedRouter><Admin /></ProtectedRouter>}>
-          <Route path="list" element={<Table />} />
+          <Route index element={<Table />} />
           <Route path="add" element={<Form />} />
           <Route path="edit/:id" element={<Form />} />
         </Route>

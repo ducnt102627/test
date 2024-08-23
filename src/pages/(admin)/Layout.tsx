@@ -10,7 +10,7 @@ const Admin = () => {
             <Link to="/"> <img src={Logo} alt="" /></Link>
           </div>
           <div className="flex flex-col gap-y-4">
-            <Link to="/admin/list">
+            <Link to="/admin">
               <span className="border-b-2 border-[#D9D9D9] hover:border-b-2 hover:border-b-[#000000] transition-all duration-300">Post</span>
             </Link>
             <Link to="/">
@@ -19,7 +19,7 @@ const Admin = () => {
 
           </div>
         </div>
-        <div className="maw-w-full  flex flex-1 w-full p-5">
+        <div className="maw-w-full  flex flex-1 w-full py-16 px-20">
           <Outlet />
 
         </div>

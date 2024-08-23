@@ -13,7 +13,7 @@ const ButtonComponent = ({ title, icon, className, onClick, type = 'button' }: P
       <button
         className={classNames(
           'bg-[#9C69E2] relative overflow-hidden group cursor-pointer border-[2px] border-[#9C69E2] rounded-[50px] text-white text-base  transition-all duration-500',
-          className // Kết hợp các lớp CSS tùy chỉnh với lớp mặc định
+          className
         )}
         onClick={onClick}
         type={type}

@@ -15,6 +15,7 @@ const refreshAccessToken = async () => {
     }
     const { data } = await instance.post('/auth/refreshToken', { refreshToken });
     localStorage.setItem('accessToken', data.accessToken);
+    localStorage.setItem('refreshToken', data.refreshToken);
     instance.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;
   } catch (error) {
     console.error('Failed to refresh access token:', error);
