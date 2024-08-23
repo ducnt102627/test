@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { Pagination } from 'swiper/modules';
 import { Swiper as SwiperType } from "swiper/types";
-import { Pagination, Navigation } from 'swiper/modules';
 
 
 import instance from '@/configs/axios';

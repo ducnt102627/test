@@ -1,13 +1,12 @@
 import BannerImage from '@/assets/img/image1 .png'
 import Logo from '@/assets/img/logo.svg'
 import { AuthContext } from '@/contexts/AuthContext'
+import ButtonComponent from '@/pages/(admin)/_components/ButtonComponent'
 import { motion } from "framer-motion"
 import { useContext } from 'react'
+import { IoMdMenu } from 'react-icons/io'
 import { Link } from 'react-router-dom'
 import useLogout from '../auth/Logout'
-import { IoMdMenu } from 'react-icons/io'
-import { FaCaretDown } from 'react-icons/fa'
-import ButtonComponent from '@/pages/(admin)/_components/ButtonComponent'
 const Header = () => {
   const { isSignIn } = useContext(AuthContext);
   console.log("isSignIn", isSignIn);

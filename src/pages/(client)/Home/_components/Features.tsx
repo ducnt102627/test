@@ -1,7 +1,6 @@
 import { Bg1, Bg2, Bg3, Bg4, Img1, Img2, Img3, Img4 } from '@/common/image';
 import { motion } from "framer-motion";
 
-
 const animationVariants = {
   hidden: { opacity: 0, scale: 0.5 },
   show: {
@@ -13,7 +12,6 @@ const animationVariants = {
     },
   },
 }
-
 const Features = () => {
   return (
     <>

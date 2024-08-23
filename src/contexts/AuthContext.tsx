@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react"
+import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
 type IUser = {
   username: string,
@@ -28,4 +28,4 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   // });
   return <AuthContext.Provider value={{ authUser, setAuthUser, isSignIn, setIsSignIn }}>{children}</AuthContext.Provider>;
 }
-export { AuthContext, AuthProvider }
+export { AuthContext, AuthProvider };

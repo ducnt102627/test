@@ -1,6 +1,6 @@
 import instance from '@/configs/axios';
-import { AuthContext } from '@/contexts/AuthContext'
-import React, { useContext } from 'react'
+import { AuthContext } from '@/contexts/AuthContext';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const useLogout = () => {
@@ -20,6 +20,3 @@ const useLogout = () => {
 
 export default useLogout
 
-// headers: {
-//   "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-// }

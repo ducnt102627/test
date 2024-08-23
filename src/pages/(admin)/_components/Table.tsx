@@ -1,9 +1,7 @@
-import instance from '@/configs/axios';
-import { IPost, ITags } from '@/interface';
+import { IPost } from '@/interface';
 import { deletePostById, getAllPosts, getAllTag } from '@/services/PostService';
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import React, { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import Paginate from './Paginate';
 

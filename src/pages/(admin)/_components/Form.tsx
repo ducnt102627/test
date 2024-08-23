@@ -1,14 +1,11 @@
 import instance from '@/configs/axios';
 import { IPost } from '@/interface';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import Joi, { options } from 'joi';
-import Select from 'react-select';
+import { addNewPosts, getAllTag, updatePosts } from '@/services/PostService';
+import Joi from 'joi';
 import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
-import { addNewPosts, getAllTag, updatePosts } from '@/services/PostService';
 
 const postSchema = Joi.object({
   // id: Joi.string(),

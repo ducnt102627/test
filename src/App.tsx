@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom"
-import HomePage from "./pages/(client)/Home/page"
-import Signin from "./pages/(client)/auth/Signin"
 import Admin from "./pages/(admin)/Layout"
 import Form from "./pages/(admin)/_components/Form"
 import Table from "./pages/(admin)/_components/Table"
-import ProtectedRouter from "./routes/ProtectedRotuer"
+import HomePage from "./pages/(client)/Home/page"
 import Layout from "./pages/(client)/Layout"
+import Signin from "./pages/(client)/auth/Signin"
+import ProtectedRouter from "./routes/ProtectedRotuer"
 
 function App() {
 
