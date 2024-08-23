@@ -7,6 +7,7 @@ const instance = axios.create({
     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
   }
 });
+
 const refreshAccessToken = async () => {
   try {
     const refreshToken = localStorage.getItem('refreshToken');
@@ -21,6 +22,20 @@ const refreshAccessToken = async () => {
     console.error('Failed to refresh access token:', error);
   }
 }
+instance.interceptors.request.use(
+  (config) => {
+    if (localStorage.getItem('accessToken')) {
+      config.headers["Authorization"] = `Bearer ${localStorage.getItem('accessToken')}`;
+    }
+    else {
+      delete config.headers["Authorization"];
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 instance.interceptors.response.use(
   (response) => {
     return response;
