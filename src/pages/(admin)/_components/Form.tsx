@@ -58,11 +58,6 @@ const Form = () => {
   }, [])
   console.log("------tag", selectedTags)
   const handleTagClick = (tag: string) => {
-    if (selectedTags.length > 0) {
-      console.log(">>Running ee");
-      clearErrors('tags');
-      console.log(">>>>", errors);
-    }
     setValue('tags', [...selectedTags, tag]);
     setSelectedTags((prevTags) =>
       prevTags.includes(tag) ? prevTags.filter((t) => t !== tag) : [...prevTags, tag]
@@ -81,7 +76,6 @@ const Form = () => {
         toast.success("Update post successfully!");
       } else {
         await addNewPosts(formattedPost);
-        console.log("000", formattedPost)
         toast.success("Add post successfully!");
       }
       navigate('/admin')
