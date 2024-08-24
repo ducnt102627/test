@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import Paginate from './Paginate';
+import Logo from '@/assets/img/logo.svg'
 
 const Table = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -64,20 +65,27 @@ const Table = () => {
   return (
     <>
       <div className="max-w-full w-full">
-        <div className="flex justify-between items-center">
-          <Link to="/admin/add">
-            <button className='bg-[#9C69E2] px-[80px] py-[13px] border-[#9C69E2] rounded-[50px] text-white text-base font-semibold'>Add new</button>
-          </Link>
-          <div className="flex gap-8">
+
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="w-full  flex justify-between ">
+            <div className="w-full  pb-8">
+              <Link to="/"> <img src={Logo} alt="" /></Link>
+            </div>
+            <Link to="/admin/add">
+              <button className='bg-[#9C69E2] px-10  py-1 md:px-[50px] md:py-[13px] border-[#9C69E2] rounded-[50px] text-white text-xs md:text-base font-semibold'>Add new</button>
+            </Link>
+
+          </div>
+          <div className="flex flex-col md:flex-col gap-8">
             <input
               type="text"
               placeholder="Title"
               onChange={(e) => handleSearch("title", e.target.value)}
 
-              className="py-[8px] pl-2 border text-[#000000] border-gray-400 focus:outline-none rounded-md"
+              className="py-1 md:py-[8px] pl-2 border text-[#1a0707] border-gray-400 focus:outline-none rounded-md"
             />
             <select
-              className='border border-gray-400 focus:outline-none w-[180px] px-2 rounded-md'
+              className='border border-gray-400 focus:outline-none  py-1 md:py-[8px] pl-2 rounded-md'
               value={tagsFilter}
               onChange={(e) => handleSearch("tags", e.target.value)}
             >

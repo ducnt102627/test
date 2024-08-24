@@ -30,7 +30,7 @@ const Header = () => {
           <div className="flex">
             <div className="">
               {isSignIn === false ? (<Link to="/signin">
-                <ButtonComponent type='button' title='Sing In' className='px-[80px] py-[15px] text-base font-bold' />
+                <ButtonComponent type='button' title='Sing In' className='px-6 py-2 md:px-[80px] md:py-[15px] text-base font-bold' />
               </Link>) : ('')}
               {isSignIn === true ? (
                 <div className=" flex flex-col sm:flex-row gap-y-2 sm:gap-x-4 md:gap-x-8">
